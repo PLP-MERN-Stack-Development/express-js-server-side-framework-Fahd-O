@@ -1,4 +1,4 @@
-// server.js - Starter Express server for Week 2 assignment
+// server.js - Completed Express server for Week 2 assignment
 
 // Import required modules
 const express = require('express');
@@ -11,6 +11,22 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware setup
 app.use(bodyParser.json());
+
+// Custom logger middleware
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${req.method} ${res.url}`);
+  next();
+});
+
+// Authentication middleware
+function authenticate(req, res, next) {
+  const apiKey = req.headers['x-api-key'];
+  if (apiKey !== '12345') {
+    return res.status(403).json({ error: "Forbidden: Invalid API key" });
+  }
+  next();
+}
 
 // Sample in-memory products database
 let products = [
@@ -40,13 +56,51 @@ let products = [
   }
 ];
 
+// Validation middleware
+function validateProduct(req, res, next) {
+  const { name, description, price, category, inStock } = req.body;
+  if (!name || !description || price == null || !category || inStock == null) {
+    return res.status(400).json({ error: 'Missing required field(s)' });
+  }
+  next();
+};
+
 // Root route
 app.get('/', (req, res) => {
   res.send('Welcome to the Product API! Go to /api/products to see all products.');
 });
 
+// GET all products (with filtering + pagination)
+app.get('/api/products', (req, res) => {
+  let filtered = [...products];
+
+  if (req.query.category) {
+    filtered = filtered.filter(p => p.category.toLowerCase() === req.query.category.toLowerCase());
+  }
+
+  const page = parseInt(req.query.page) || 1;
+  const limit = 5;
+  const start = (page - 1) * limit;
+  const end = start + limit;
+
+  res.json({
+    total: filtered.length,
+    page,
+    products: filtered.slice(start,  end)
+  });
+});
+
+// Get product by ID
+app.get('/api/products/:id', (req, res) => {
+  const product = products.find(p => p.id === req.params.id);
+  if (!product) return res.status(404).json({ error: "Product not found!" });
+  res.json(product);
+});
+
+// POST create product
+app.post
+
 // TODO: Implement the following routes:
-// GET /api/products - Get all products
 // GET /api/products/:id - Get a specific product
 // POST /api/products - Create a new product
 // PUT /api/products/:id - Update a product
