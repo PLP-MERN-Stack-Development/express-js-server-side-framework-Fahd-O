@@ -1,62 +1,77 @@
-# Express.js RESTful API Assignment
+# express-js-server-side-framework-Fahd-O
 
-This assignment focuses on building a RESTful API using Express.js, implementing proper routing, middleware, and error handling.
+Minimal Express.js server implementation for the MERN Specialization — Week 2 assignment.
 
-## Assignment Overview
+## Overview
+This repository contains a small Express.js application that demonstrates server-side fundamentals:
+- basic routing
+- JSON request/response handling
+- middleware usage (logger, body parsing, error handling)
+- simple in-memory data operations (CRUD)
 
-You will:
-1. Set up an Express.js server
-2. Create RESTful API routes for a product resource
-3. Implement custom middleware for logging, authentication, and validation
-4. Add comprehensive error handling
-5. Develop advanced features like filtering, pagination, and search
+Use this as a learning scaffold or starting point for further assignments.
 
-## Getting Started
+## Features
+- GET / -> health check
+- GET /api/items -> list items
+- GET /api/items/:id -> get single item
+- POST /api/items -> create item
+- PUT /api/items/:id -> update item
+- DELETE /api/items/:id -> delete item
+- Basic input validation and centralized error handling
+- Simple logger middleware
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Install dependencies:
-   ```
-   npm install
-   ```
-4. Run the server:
-   ```
-   npm start
-   ```
+## Prerequisites
+- Node.js 14+ (or newer LTS)
+- npm
 
-## Files Included
+## Install
+1. Clone the repository
+    git clone <repo-url>
+2. Install dependencies
+    cd express-js-server-side-framework-Fahd-O
+    npm install
 
-- `Week2-Assignment.md`: Detailed assignment instructions
-- `server.js`: Starter Express.js server file
-- `.env.example`: Example environment variables file
+## Run
+- Start server:
+  npm start
+- For development with auto-reload:
+  npm run dev
+Default server port: 3000 (configurable via PORT environment variable)
 
-## Requirements
+## Example Requests
+- Health check
+  GET http://localhost:3000/
+- List items
+  GET http://localhost:3000/api/items
+- Create item
+  POST http://localhost:3000/api/items
+  Body (JSON): { "name": "Example", "description": "..." }
 
-- Node.js (v18 or higher)
-- npm or yarn
-- Postman, Insomnia, or curl for API testing
+## Project Structure
+- /src
+  - server.js        - app bootstrap
+  - app.js           - express app, middleware, routes
+  - routes/          - route definitions
+  - controllers/     - request handlers
+  - middleware/      - custom middleware (logger, error handler)
+  - data/            - simple in-memory store or seed data
+- package.json
+- README.md
 
-## API Endpoints
+## Scripts (package.json)
+- npm start — start production server
+- npm run dev — start server with nodemon (dev)
+- npm test — run tests (if provided)
 
-The API will have the following endpoints:
+## Notes
+- This project uses an in-memory store for simplicity. For production use, replace with a persistent database.
+- Add validation, authentication, and robust error handling as next steps.
 
-- `GET /api/products`: Get all products
-- `GET /api/products/:id`: Get a specific product
-- `POST /api/products`: Create a new product
-- `PUT /api/products/:id`: Update a product
-- `DELETE /api/products/:id`: Delete a product
+## License
+MIT
 
-## Submission
+## Author
+Fahd O. — MERN Specialization assignment
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
-
-1. Complete all the required API endpoints
-2. Implement the middleware and error handling
-3. Document your API in the README.md
-4. Include examples of requests and responses
-
-## Resources
-
-- [Express.js Documentation](https://expressjs.com/)
-- [RESTful API Design Best Practices](https://restfulapi.net/)
-- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) 
+Feel free to extend, refactor, and add tests to improve the implementation.
