@@ -98,11 +98,13 @@ app.get('/api/products/:id', (req, res) => {
 });
 
 // POST create product
-app.post
+app.post('/api/products', authenticate, validateProduct, (req, res) => {
+  const newProduct = { id: uuidv4(), ...req.body };
+  products.push(newProduct);
+  res.status(201).json(newProduct);
+});
 
 // TODO: Implement the following routes:
-// GET /api/products/:id - Get a specific product
-// POST /api/products - Create a new product
 // PUT /api/products/:id - Update a product
 // DELETE /api/products/:id - Delete a product
 
