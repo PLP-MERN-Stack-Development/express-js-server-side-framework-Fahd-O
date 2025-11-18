@@ -104,8 +104,15 @@ app.post('/api/products', authenticate, validateProduct, (req, res) => {
   res.status(201).json(newProduct);
 });
 
+// PUT update product
+app.put('/api/products/:id', authenticate, validateProduct, (req, res) => {
+  const index = products.findIndex(p => p.id === req.params.id);
+  if (index === -1) return res.status(404).json({ error: 'Product not found'});
+  products[index] = { ...products[index], ...req.body };
+  res.json(products[index]);
+});
+
 // TODO: Implement the following routes:
-// PUT /api/products/:id - Update a product
 // DELETE /api/products/:id - Delete a product
 
 // Example route implementation for GET /api/products
