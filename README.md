@@ -12,12 +12,12 @@ This repository contains a small Express.js application that demonstrates server
 Use this as a learning scaffold or starting point for further assignments.
 
 ## Features
-- GET / -> health check
-- GET /api/items -> list items
-- GET /api/items/:id -> get single item
-- POST /api/items -> create item
-- PUT /api/items/:id -> update item
-- DELETE /api/items/:id -> delete item
+- GET / -> home page
+- GET /api/products -> list products
+- GET /api/products/:id -> get single product
+- POST /api/products -> create product
+- PUT /api/products/:id -> update product
+- DELETE /api/products/:id -> delete product
 - Basic input validation and centralized error handling
 - Simple logger middleware
 
@@ -40,12 +40,12 @@ Use this as a learning scaffold or starting point for further assignments.
 Default server port: 3000 (configurable via PORT environment variable)
 
 ## Example Requests
-- Health check
+- Home page
   GET http://localhost:3000/
-- List items
-  GET http://localhost:3000/api/items
-- Create item
-  POST http://localhost:3000/api/items
+- List products
+  GET http://localhost:3000/api/products
+- Create product
+  POST http://localhost:3000/api/products
   Body (JSON): { "name": "Example", "description": "..." }
 
 ## Project Structure
