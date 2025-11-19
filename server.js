@@ -112,23 +112,43 @@ app.put('/api/products/:id', authenticate, validateProduct, (req, res) => {
   res.json(products[index]);
 });
 
-// TODO: Implement the following routes:
-// DELETE /api/products/:id - Delete a product
+// DELETE product
+app.delete('/api/products/:id', authenticate, (req, res) => {
+  const index = products.findIndex(p => p.id === req.params.id);
+  if (index === -1) return res.status(404).json({ error: 'Product not found!'});
+  products.splice(index, 1);
+  res.status(204).send();
+});
+
+// Search endpoint
+app.get('/api/products/search/:name', (req, res) => {
+  const result = products.filter(p => p.name.toLowerCase().includes(req.params.name.toLowerCase()));
+  res.json(result);
+});
+
+// Statistics endpoint
+app.get('/api/products/stats', (req, res) => {
+  const stats = {};
+  for (const p of products) {
+    stats[p.category] = (stats[p.category] || 0) + 1;
+  }
+  res.json(stats);
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error('Error:', err.message);
+  res.status(500).json({ error: 'Internal Server Error! Something is broken in the server script Einstein!' })
+});
 
 // Example route implementation for GET /api/products
 app.get('/api/products', (req, res) => {
   res.json(products);
 });
 
-// TODO: Implement custom middleware for:
-// - Request logging
-// - Authentication
-// - Error handling
-
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-// Export the app for testing purposes
-module.exports = app; 
+module.exports = app;
